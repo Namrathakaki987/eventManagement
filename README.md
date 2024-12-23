@@ -53,20 +53,20 @@ A web application for managing events, attendees, and associated tasks. The syst
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/yourusername/event-management-system.git](https://github.com/Namrathakaki987/eventManagement.git)
+   git clone https://github.com/yourusername/event-management-system.git](https://github.com/Namrathakaki987/eventManagement.git
    cd eventManagement
 2. Install dependencies<br><br>
-   Backend dependencies
-   cd backend
-   npm install
-   Frontend dependencies
-   cd ../frontend
-   npm install
-   npm install 
+   Backend dependencies<br>
+   cd backend<br>
+   npm install<br>
+   Frontend dependencies<br>
+   cd ../frontend<br>
+   npm install<br>
+
 
 4. Set up the environment variables:
    Create a .env file in the backend directory with the following keys<br>
-   PORT=5000<br>
+   PORT=8080<br>
    MONGO_URI=your_mongodb_connection_string
 
 5. Start the development servers:
