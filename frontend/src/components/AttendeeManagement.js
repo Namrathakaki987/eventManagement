@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AttendeeManagement() {
   const [attendees, setAttendees] = useState([]);
@@ -20,6 +22,7 @@ function AttendeeManagement() {
       setAttendees(data.attendees);
     } catch (error) {
       console.error("Error fetching attendees:", error);
+      toast.error("Failed to fetch attendees.");
     }
   };
 
@@ -29,12 +32,13 @@ function AttendeeManagement() {
       setEvents(data.events);
     } catch (error) {
       console.error("Error fetching events:", error);
+      toast.error("Failed to fetch events.");
     }
   };
 
   const handleAssignEvent = async () => {
     if (!selectedAttendee || !selectedEvent) {
-      alert("Please select both an attendee and an event.");
+      toast.warn("Please select both an attendee and an event.");
       return;
     }
 
@@ -43,58 +47,59 @@ function AttendeeManagement() {
         attendeeId: selectedAttendee,
         eventId: selectedEvent,
       });
-      alert("Attendee assigned to event successfully!");
-      fetchAttendees();
+
+      await fetchAttendees();
+      toast.success("Attendee assigned to event successfully!");
       setSelectedAttendee(""); 
       setSelectedEvent(""); 
     } catch (error) {
       console.error("Error assigning attendee to event:", error);
-      alert(error.response?.data?.message || "Failed to assign attendee to event.");
+      toast.error(error.response?.data?.message || "Failed to assign attendee to event.");
     }
   };
 
   const handleAddAttendee = async () => {
     if (!newAttendee.name || !newAttendee.email) {
-      alert("Please fill in both name and email.");
+      toast.warn("Please fill in both name and email.");
       return;
     }
 
     try {
       await axios.post("http://localhost:8080/api/v1/attendee", newAttendee);
-      alert("Attendee added successfully!");
-      fetchAttendees();
-      setNewAttendee({ name: "", email: "" }); 
+      await fetchAttendees();
+      toast.success("Attendee added successfully!");
+      setNewAttendee({ name: "", email: "" });
     } catch (error) {
       console.error("Error adding attendee:", error);
-      alert("Failed to add attendee.");
+      toast.error("Failed to add attendee.");
     }
   };
 
   const handleDeleteAttendee = async (attendeeId) => {
     try {
       await axios.delete(`http://localhost:8080/api/v1/attendee/${attendeeId}`);
-      alert("Attendee deleted successfully!");
-      fetchAttendees();
+      await fetchAttendees();
+      toast.success("Attendee deleted successfully!");
     } catch (error) {
       console.error("Error deleting attendee:", error);
-      alert("Failed to delete attendee.");
+      toast.error("Failed to delete attendee.");
     }
   };
 
   const handleEditAttendee = async () => {
     if (!editingAttendee.name || !editingAttendee.email) {
-      alert("Please fill in both name and email.");
+      toast.warn("Please fill in both name and email.");
       return;
     }
 
     try {
       await axios.put(`http://localhost:8080/api/v1/attendee/${editingAttendee._id}`, editingAttendee);
-      alert("Attendee updated successfully!");
-      fetchAttendees();
+      await fetchAttendees();
+      toast.success("Attendee updated successfully!");
       setEditingAttendee(null); 
     } catch (error) {
       console.error("Error editing attendee:", error);
-      alert("Failed to update attendee.");
+      toast.error("Failed to update attendee.");
     }
   };
 
@@ -102,7 +107,7 @@ function AttendeeManagement() {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Attendee Management</h2>
 
-      {/* Add New Attendee   */}
+      {/* Add New Attendee */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold mb-2">Add New Attendee</h3>
         <input
@@ -127,7 +132,7 @@ function AttendeeManagement() {
         </button>
       </div>
 
-      {/* Edit Attendee  */}
+      
       {editingAttendee && (
         <div className="mb-4">
           <h3 className="text-xl font-semibold mb-2">Edit Attendee</h3>
@@ -154,50 +159,46 @@ function AttendeeManagement() {
         </div>
       )}
 
-{/* Attendee List */}
-<div className="mb-4">
-  <h3 className="text-xl font-semibold mb-2">Attendee List</h3>
-  <table className="w-full border-collapse">
-    <thead>
-      <tr>
-        <th className="border p-2">Name</th>
-        <th className="border p-2">Email</th>
-        <th className="border p-2">Assigned Event</th>
-        <th className="border p-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {attendees.map((attendee) => (
-        <tr key={attendee._id}>
-          <td className="border p-2">{attendee.name}</td>
-          <td className="border p-2">{attendee.email}</td>
-          <td className="border p-2">
-            
-            {attendee.event ? attendee.event.name : "Not Assigned"}
-          </td>
-          <td className="border p-2">
-            <button
-              className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
-              onClick={() => setEditingAttendee(attendee)}
-            >
-              Edit
-            </button>
-            <button
-              className="bg-red-500 text-white px-2 py-1 rounded"
-              onClick={() => handleDeleteAttendee(attendee._id)}
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
-
-
       
+      <div className="mb-4">
+        <h3 className="text-xl font-semibold mb-2">Attendee List</h3>
+        <table className="w-full border-collapse">
+          <thead>
+            <tr>
+              <th className="border p-2">Name</th>
+              <th className="border p-2">Email</th>
+              <th className="border p-2">Assigned Event</th>
+              <th className="border p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {attendees.map((attendee) => (
+              <tr key={attendee._id}>
+                <td className="border p-2">{attendee.name}</td>
+                <td className="border p-2">{attendee.email}</td>
+                <td className="border p-2">
+                  {attendee.event ? attendee.event.name : "Not Assigned"}
+                </td>
+                <td className="border p-2">
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                    onClick={() => setEditingAttendee(attendee)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleDeleteAttendee(attendee._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <div className="mb-4">
         <label className="block font-semibold">Select Attendee:</label>
         <select
@@ -236,6 +237,9 @@ function AttendeeManagement() {
       >
         Assign Attendee to Event
       </button>
+
+
+      <ToastContainer />
     </div>
   );
 }
