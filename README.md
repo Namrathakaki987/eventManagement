@@ -53,8 +53,8 @@ A web application for managing events, attendees, and associated tasks. The syst
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/event-management-system.git
-   cd event-management-system
+   git clone [https://github.com/yourusername/event-management-system.git](https://github.com/Namrathakaki987/eventManagement.git)
+   cd eventManagement
 2. Install dependencies
    Backend dependencies
    cd backend
