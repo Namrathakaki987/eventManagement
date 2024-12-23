@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login({ onLogin }) {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -8,6 +10,7 @@ function Login({ onLogin }) {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false); 
 
   const toggleMode = () => setIsLoginMode(!isLoginMode);
 
@@ -17,6 +20,7 @@ function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); 
     try {
       const url = isLoginMode
         ? "http://localhost:8080/api/v1/user/login"
@@ -26,26 +30,24 @@ function Login({ onLogin }) {
       if (data.success) {
         if (isLoginMode) {
           onLogin(data.token);
+          toast.success("Login successful!");
         } else {
-          alert("Registration successful. Please log in.");
+          toast.success("Registration successful. Please log in.");
           toggleMode();
         }
       }
     } catch (error) {
       console.error("Authentication failed", error);
-      alert("Error: " + error.response.data.message);
+      toast.error("Error: " + (error.response?.data?.message || "Something went wrong"));
+    } finally {
+      setLoading(false); 
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow w-96"
-      >
-        <h2 className="text-2xl font-bold mb-4">
-          {isLoginMode ? "Login" : "Register"}
-        </h2>
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow w-96">
+        <h2 className="text-2xl font-bold mb-4">{isLoginMode ? "Login" : "Register"}</h2>
         {!isLoginMode && (
           <div className="mb-4">
             <label className="block">Full Name</label>
@@ -81,19 +83,20 @@ function Login({ onLogin }) {
         <button
           type="submit"
           className="bg-blue-500 text-white w-full py-2 rounded"
+          disabled={loading} 
         >
-          {isLoginMode ? "Login" : "Register"}
+          {loading ? "Loading..." : isLoginMode ? "Login" : "Register"}
         </button>
         <p className="mt-4 text-center">
           {isLoginMode ? "New here?" : "Already have an account?"}{" "}
-          <span
-            className="text-blue-500 cursor-pointer"
-            onClick={toggleMode}
-          >
+          <span className="text-blue-500 cursor-pointer" onClick={toggleMode}>
             {isLoginMode ? "Register" : "Login"}
           </span>
         </p>
       </form>
+
+     
+      <ToastContainer />
     </div>
   );
 }
