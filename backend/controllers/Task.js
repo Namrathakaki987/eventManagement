@@ -49,6 +49,7 @@ export const getTasksForEvent = async (req, res) => {
   try {
     const tasks = await Task.find({ eventId: req.params.eventId })
       .populate('assignedTo', 'name email') 
+      // .populate('eventId','name')
       .exec();
     res.json({ tasks });
   } catch (error) {
