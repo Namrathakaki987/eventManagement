@@ -65,7 +65,7 @@ A web application for managing events, attendees, and associated tasks. The syst
    npm install 
 
 3. Set up the environment variables:
-   Create a .env file in the backend directory with the following keys
+   Create a .env file in the backend directory with the following keys<br>
    PORT=5000<br>
    MONGO_URI=your_mongodb_connection_string
 
@@ -110,7 +110,7 @@ This project is licensed under the MIT License.
 Contact
 For questions or feedback, reach out to:
 
-Your Name: namrathahkaki@gmail.com
+Name: namrathahkaki@gmail.com<br>
 GitHub: https://github.com/Namrathakaki987
 
 
