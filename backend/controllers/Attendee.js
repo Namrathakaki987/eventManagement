@@ -22,7 +22,7 @@ export const addAttendee = async (req, res) => {
 
 export const getAllAttendees = async (req, res) => {
     try {
-      const attendees = await Attendee.find().populate('event', 'name'); // Populate only the 'name' field of Event
+      const attendees = await Attendee.find().populate('event', 'name'); 
       res.status(200).json({ attendees });
     } catch (error) {
       console.error(error);
