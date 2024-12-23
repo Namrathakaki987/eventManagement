@@ -81,17 +81,17 @@ A web application for managing events, attendees, and associated tasks. The syst
 6. Open the app in your browser at http://localhost:3000.
 
    
-###API Endpoints
+### API Endpoints
 
 Event Management<br>
 POST /api/v1/events - Create an event.<br>
 GET /api/v1/events - Get all events.<br>
 PUT /api/v1/events/:id - Update an event by ID.<br>
-DELETE /api/v1/events/:id - Delete an event by ID.<br>
+DELETE /api/v1/events/:id - Delete an event by ID.<br><br>
 Attendee Management<br>
 POST /api/v1/attendees - Add an attendee.<br>
 GET /api/v1/attendees - Get all attendees.<br>
-DELETE /api/v1/attendees/:id - Delete an attendee by ID.<br>
+DELETE /api/v1/attendees/:id - Delete an attendee by ID.<br><br>
 Task Management<br>
 POST /api/v1/tasks - Create a task.<br>
 GET /api/v1/tasks/event/:eventId - Get tasks for an event.<br>
