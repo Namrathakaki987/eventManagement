@@ -1,16 +1,20 @@
-Event Management System 
+# Event Management System with Task Tracker
 
 A web application for managing events, attendees, and associated tasks. The system provides an intuitive dashboard for event organization, attendee assignments, and task tracking.
 
-Features
+---
 
-1. Event Management Page:
+## Features
+
+### Frontend
+1. **Event Management Page**:
    - View all events with options to add, edit, and delete.
    - Each event displays details like name, description, location, and date.
-2. Attendee Management Page:
+2. **Attendee Management Page**:
    - View a list of attendees.
    - Add or remove attendees.
-3. Task Tracker Page**:
+   - Assign attendees to events or tasks.
+3. **Task Tracker Page**:
    - Display tasks linked to events.
    - Update task statuses (Pending/Completed).
 
@@ -51,3 +55,65 @@ Features
    ```bash
    git clone https://github.com/yourusername/event-management-system.git
    cd event-management-system
+2. Install dependencies
+ ### Backend dependencies
+cd backend
+npm install
+
+### Frontend dependencies
+cd ../frontend
+npm install axios 
+
+3. Set up the environment variables:
+   Create a .env file in the backend directory with the following keys
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+
+4. Start the development servers:
+   ### Backend
+   cd backend
+   node index.js
+
+   ### Frontend
+   cd ../frontend
+   npm start
+
+5. Open the app in your browser at http://localhost:3000.
+
+   
+##API Endpoints
+
+###Event Management
+POST /api/v1/events - Create an event.
+GET /api/v1/events - Get all events.
+PUT /api/v1/events/:id - Update an event by ID.
+DELETE /api/v1/events/:id - Delete an event by ID.
+###Attendee Management
+POST /api/v1/attendees - Add an attendee.
+GET /api/v1/attendees - Get all attendees.
+DELETE /api/v1/attendees/:id - Delete an attendee by ID.
+###Task Management
+POST /api/v1/tasks - Create a task.
+GET /api/v1/tasks/event/:eventId - Get tasks for an event.
+PATCH /api/v1/tasks/:id/status - Update task status.
+
+Contributing
+Contributions are welcome! Follow these steps to contribute:
+
+Fork the repository.
+Create a new branch for your feature/fix.
+Commit your changes and push them to your branch.
+Submit a pull request with a description of your changes.
+License
+This project is licensed under the MIT License.
+
+Contact
+For questions or feedback, reach out to:
+
+Your Name: namrathahkaki@gmail.com
+GitHub: https://github.com/Namrathakaki987
+
+
+
+
+
