@@ -56,43 +56,43 @@ A web application for managing events, attendees, and associated tasks. The syst
    git clone https://github.com/yourusername/event-management-system.git
    cd event-management-system
 2. Install dependencies
- ### Backend dependencies
-cd backend
-npm install
-
-### Frontend dependencies
-cd ../frontend
-npm install axios 
+   Backend dependencies
+   cd backend
+   npm install
+   
+   Frontend dependencies
+   cd ../frontend
+   npm install 
 
 3. Set up the environment variables:
    Create a .env file in the backend directory with the following keys
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
+   PORT=5000
+   MONGO_URI=your_mongodb_connection_string
 
-4. Start the development servers:
-   ### Backend
+5. Start the development servers:
+   Backend
    cd backend
    node index.js
 
-   ### Frontend
+   Frontend
    cd ../frontend
    npm start
 
-5. Open the app in your browser at http://localhost:3000.
+6. Open the app in your browser at http://localhost:3000.
 
    
-##API Endpoints
+###API Endpoints
 
-###Event Management
+Event Management
 POST /api/v1/events - Create an event.
 GET /api/v1/events - Get all events.
 PUT /api/v1/events/:id - Update an event by ID.
 DELETE /api/v1/events/:id - Delete an event by ID.
-###Attendee Management
+Attendee Management
 POST /api/v1/attendees - Add an attendee.
 GET /api/v1/attendees - Get all attendees.
 DELETE /api/v1/attendees/:id - Delete an attendee by ID.
-###Task Management
+Task Management
 POST /api/v1/tasks - Create a task.
 GET /api/v1/tasks/event/:eventId - Get tasks for an event.
 PATCH /api/v1/tasks/:id/status - Update task status.
