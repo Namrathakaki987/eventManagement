@@ -66,7 +66,7 @@ A web application for managing events, attendees, and associated tasks. The syst
 
 3. Set up the environment variables:
    Create a .env file in the backend directory with the following keys
-   PORT=5000
+   PORT=5000<br>
    MONGO_URI=your_mongodb_connection_string
 
 5. Start the development servers:
@@ -83,19 +83,19 @@ A web application for managing events, attendees, and associated tasks. The syst
    
 ###API Endpoints
 
-Event Management
-POST /api/v1/events - Create an event.
-GET /api/v1/events - Get all events.
-PUT /api/v1/events/:id - Update an event by ID.
-DELETE /api/v1/events/:id - Delete an event by ID.
-Attendee Management
-POST /api/v1/attendees - Add an attendee.
-GET /api/v1/attendees - Get all attendees.
-DELETE /api/v1/attendees/:id - Delete an attendee by ID.
-Task Management
-POST /api/v1/tasks - Create a task.
-GET /api/v1/tasks/event/:eventId - Get tasks for an event.
-PATCH /api/v1/tasks/:id/status - Update task status.
+Event Management<br>
+POST /api/v1/events - Create an event.<br>
+GET /api/v1/events - Get all events.<br>
+PUT /api/v1/events/:id - Update an event by ID.<br>
+DELETE /api/v1/events/:id - Delete an event by ID.<br>
+Attendee Management<br>
+POST /api/v1/attendees - Add an attendee.<br>
+GET /api/v1/attendees - Get all attendees.<br>
+DELETE /api/v1/attendees/:id - Delete an attendee by ID.<br>
+Task Management<br>
+POST /api/v1/tasks - Create a task.<br>
+GET /api/v1/tasks/event/:eventId - Get tasks for an event.<br>
+PATCH /api/v1/tasks/:id/status - Update task status.<br>
 
 Contributing
 Contributions are welcome! Follow these steps to contribute:
