@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "./Modal.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function EventManagement() {
   const [events, setEvents] = useState([]);
@@ -17,22 +19,36 @@ function EventManagement() {
       setEvents(data.events);
     } catch (error) {
       console.error("Error fetching events", error);
+      toast.error("Failed to fetch events.");
     }
   };
 
   const handleSaveEvent = async (event) => {
-    if (currentEvent) {
-      await axios.put(`http://localhost:8080/api/v1/event/${currentEvent._id}`, event);
-    } else {
-      await axios.post("http://localhost:8080/api/v1/event", event);
+    try {
+      if (currentEvent) {
+        await axios.put(`http://localhost:8080/api/v1/event/${currentEvent._id}`, event);
+        toast.success("Event updated successfully!");
+      } else {
+        await axios.post("http://localhost:8080/api/v1/event", event);
+        toast.success("Event added successfully!");
+      }
+      fetchEvents();
+      setModalOpen(false);
+    } catch (error) {
+      console.error("Error saving event", error);
+      toast.error("Failed to save event.");
     }
-    fetchEvents();
-    setModalOpen(false);
   };
 
   const handleDeleteEvent = async (id) => {
-    await axios.delete(`http://localhost:8080/api/v1/event/${id}`);
-    fetchEvents();
+    try {
+      await axios.delete(`http://localhost:8080/api/v1/event/${id}`);
+      fetchEvents();
+      toast.success("Event deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting event", error);
+      toast.error("Failed to delete event.");
+    }
   };
 
   return (
@@ -77,6 +93,9 @@ function EventManagement() {
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <EventForm onSave={handleSaveEvent} event={currentEvent} />
       </Modal>
+
+      
+      <ToastContainer />
     </div>
   );
 }
@@ -145,3 +164,4 @@ function EventForm({ onSave, event }) {
 }
 
 export default EventManagement;
+
