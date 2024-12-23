@@ -17,15 +17,19 @@ export const addAttendee = async (req, res) => {
     }
 };
 
+
+
+
 export const getAllAttendees = async (req, res) => {
     try {
-        const attendees = await Attendee.find().populate("assignedTasks");
-        res.status(200).json({ attendees, success: true });
+      const attendees = await Attendee.find().populate('event', 'name'); // Populate only the 'name' field of Event
+      res.status(200).json({ attendees });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error", success: false });
+      console.error(error);
+      res.status(500).json({ message: "Error fetching attendees", error });
     }
-};
+  };
+  
 
 export const deleteAttendee = async (req, res) => {
     try {
@@ -47,27 +51,35 @@ export const deleteAttendee = async (req, res) => {
     }
 };
 
+
+
 export const assignAttendeeToEvent = async (req, res) => {
     try {
-        const { attendeeId, eventId } = req.body;
-
-        const event = await Event.findById(eventId);
-        const attendee = await Attendee.findById(attendeeId);
-
-        if (!event || !attendee) {
-            return res.status(404).json({ message: "Event or attendee not found", success: false });
-        }
-
-        if (event.attendees.includes(attendeeId)) {
-            return res.status(400).json({ message: "Attendee already assigned to this event", success: false });
-        }
-
+      const { attendeeId, eventId } = req.body;
+  
+      const event = await Event.findById(eventId);
+      const attendee = await Attendee.findById(attendeeId);
+  
+      if (!event || !attendee) {
+        return res.status(404).json({ message: "Event or Attendee not found", success: false });
+      }
+  
+      attendee.event = eventId;
+      await attendee.save();
+  
+      if (!event.attendees.includes(attendeeId)) {
         event.attendees.push(attendeeId);
         await event.save();
-
-        res.status(200).json({ message: "Attendee assigned to event successfully", success: true });
+      }
+  
+      res.status(200).json({ message: "Attendee assigned to event successfully", success: true });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error", success: false });
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
     }
-};
+  };
+  
+
+
+
+
